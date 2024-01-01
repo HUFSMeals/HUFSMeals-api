@@ -17,14 +17,14 @@ class GoogleLoginApi(APIView):
         app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
-        
+
         redirect_uri = "http://127.0.0.1:8000/accounts/login/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
             f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
         )
-        
+
         return response
 
 
@@ -42,7 +42,7 @@ class DevGoogleLogin(APIView):
             "grant_type" : 'authorization_code',
             "redirect_uri" : "http://127.0.0.1:8000/accounts/login/"
         }
-        
+
         access_token = requests.post(token_url, data=data).json().get('access_token')
 
         user_info_url = "https://www.googleapis.com/oauth2/v2/userinfo"
@@ -59,14 +59,14 @@ class DevGoogleLogin(APIView):
                 "code" : "a-S001",
                 "data" : {
                     "access_token" : access_token,
-                    "user_info" : UserInfoSerializer(user).data, 
+                    "user_info" : UserInfoSerializer(user).data,
                     "exist_user" : True
                 }
             }
             return Response(res, status=status.HTTP_200_OK)
-        
+
         country = user_information['locale']
-        
+
         if country not in lang_lst:
             country = "en" # 해당 국가에 대한 번역을 지원하지 않을 경우 영어로 통일
 

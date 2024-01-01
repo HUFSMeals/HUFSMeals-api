@@ -22,5 +22,5 @@ class SetNickname(APIView):
             "msg" : "닉네임 설정 성공",
             "code" : "a-S003"
         }
-        
+
         return Response(res, status = status.HTTP_200_OK)

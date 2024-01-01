@@ -51,7 +51,7 @@ class Translate(APIView):
                     "code" : "t-F004"
                 }
             return Response(res, status = status.HTTP_400_BAD_REQUEST)
-        
+
         query_data = {
             "text" : response['message']['result']['translatedText'],
             "source" : response['message']['result']['srcLangType'],

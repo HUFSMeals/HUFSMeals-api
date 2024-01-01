@@ -23,7 +23,7 @@ class GoogleLogin(APIView):
             "grant_type" : 'authorization_code',
             "redirect_uri" : "http://127.0.0.1:8000/accounts/login/" # 배포 후 수정 요망
         }
-        
+
         access_token = requests.post(token_url, data=data).json().get('access_token')
 
         user_info_url = "https://www.googleapis.com/oauth2/v2/userinfo"
@@ -50,12 +50,12 @@ class GoogleLogin(APIView):
                     "code" : "a-S001",
                     "data" : {
                         "access_token" : access_token,
-                        "user_info" : UserInfoSerializer(user).data, 
+                        "user_info" : UserInfoSerializer(user).data,
                         "exist_user" : True
                     }
                 }
             return Response(res, status=status.HTTP_200_OK)
-        
+
         country = user_information['locale']
 
         if country not in lang_lst:
@@ -73,4 +73,3 @@ class GoogleLogin(APIView):
             }
         }
         return Response(res, status=status.HTTP_200_OK)
-    
