@@ -1,6 +1,15 @@
 from rest_framework import serializers
 from .models import *
 
+class ReviewImageSerializer(serializers.ModelSerializer):
+    """
+    리뷰 사진 시리얼라이저
+    """
+    class Meta:
+        model = ReviewImage
+        fields = '__all__'
+
+
 class CreateReviewSerializer(serializers.ModelSerializer):
     """
     리뷰 생성 시리얼라이저
@@ -14,15 +23,16 @@ class ReviewInfoSerializer(serializers.ModelSerializer):
     """
     리뷰 정보 시리얼라이저
     """
+    image = ReviewImageSerializer(many = True)
     class Meta:
         model = Review
         fields = '__all__'
 
 
-class ReviewImageSerializer(serializers.ModelSerializer):
+class TranslatedReviewSerializer(serializers.ModelSerializer):
     """
-    리뷰 사진 시리얼라이저
+    번역된 리뷰 시리얼라이저
     """
     class Meta:
-        model = ReviewImage
+        model = TranslatedReview
         fields = '__all__'
