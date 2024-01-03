@@ -31,3 +31,13 @@ class ReviewImage(models.Model):
     """
     review = models.ForeignKey(Review, on_delete = models.CASCADE)
     review_image = models.ImageField(upload_to = review_image_path, blank = True)
+
+
+class TranslatedReview(models.Model):
+    """
+    번역된 리뷰 model
+    """
+    review = models.ForeignKey(Review, on_delete = models.CASCADE)
+    src_lang = models.CharField(max_length = 10, null = True) # 번역된 언어
+    title = models.CharField(max_length = 100)
+    body = models.TextField(default = "")
