@@ -19,18 +19,9 @@ class ReviewInfoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CreateReviewPhotoSerializer(serializers.ModelSerializer):
-    """
-    리뷰 사진 생성 시리얼라이저
-    """
-    class Meta:
-        model = ReviewImage
-        fields = ['photo']
-
-
 class ReviewImageSerializer(serializers.ModelSerializer):
     """
-    리뷰 사진 정보 시리얼라이저
+    리뷰 사진 시리얼라이저
     """
     class Meta:
         model = ReviewImage
