@@ -11,7 +11,7 @@ lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'e
 
 class GoogleLogin(APIView):
     """
-    일반 사용자 액세슨 토큰 발급 view
+    일반 사용자 액세스 토큰 발급 view
     """
     def get(self, request, code):
         code = code
