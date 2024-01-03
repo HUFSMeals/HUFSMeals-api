@@ -31,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     google_id = models.CharField(max_length=30, unique=True, null = True)
     nickname = models.CharField(max_length=100, null = True)
-    country = models.CharField(max_length=10)
+    language = models.CharField(max_length=10)
     USERNAME_FIELD = 'google_id'
     EMAIL_FIELD = 'google_id'
     REQUIRED_FIELDS = []

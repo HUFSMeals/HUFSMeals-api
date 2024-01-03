@@ -56,13 +56,13 @@ class GoogleLogin(APIView):
                 }
             return Response(res, status=status.HTTP_200_OK)
         
-        country = user_information['locale']
+        language = user_information['locale']
 
-        if country not in lang_lst:
-            country = "en" # 해당 국가에 대한 번역을 지원하지 않을 경우 영어로 통일
+        if language not in lang_lst:
+            language = "en" # 해당 국가에 대한 번역을 지원하지 않을 경우 영어로 통일
 
-        new_user = User(google_id = google_id, country = country)
-        # new_user = User(username = username, google_id = google_id, country = country)
+        new_user = User(google_id = google_id, language = language)
+        # new_user = User(username = username, google_id = google_id, language = language)
         new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
         res = {
