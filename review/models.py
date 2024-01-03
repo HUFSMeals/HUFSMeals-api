@@ -17,7 +17,7 @@ class Review(models.Model):
     restaurant = models.ForeignKey(Restaurant, null = True, on_delete = models.CASCADE)
     title = models.CharField(max_length = 100)
     body = models.TextField(default = "")
-    src_lang = models.CharField(max_length = 10, null = True)
+    src_lang = models.CharField(max_length = 10, null = True) # 작성된 리뷰의 언어
     created_at = models.DateField(auto_now_add = True, null = True)
     score = models.IntegerField(default= 0)
     
