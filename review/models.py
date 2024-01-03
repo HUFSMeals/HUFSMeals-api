@@ -8,7 +8,11 @@ def review_image_path(instance, filename):
     filename = f"{uuid.uuid4()}.{ext}"
     return f'review_image/{instance.review.pk}/{filename}'
 
+
 class Review(models.Model):
+    """
+    리뷰 model
+    """
     user = models.ForeignKey(User, null = True, on_delete = models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, null = True, on_delete = models.CASCADE)
     title = models.CharField(max_length = 100)
@@ -22,5 +26,8 @@ class Review(models.Model):
     
 
 class ReviewImage(models.Model):
+    """
+    리뷰 사진 model
+    """
     review = models.ForeignKey(Review, on_delete = models.CASCADE)
     review_image = models.ImageField(upload_to = review_image_path, blank = True)
