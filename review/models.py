@@ -32,7 +32,7 @@ class ReviewImage(models.Model):
     """
     리뷰 사진 model
     """
-    review = models.ForeignKey(Review, on_delete = models.CASCADE)
+    review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'image')
     review_image = models.ImageField(upload_to = review_image_path, null = True, blank = True) # 축소된 이미지
     original_image = models.ImageField(upload_to = review_image_path, blank = True) # 원본 이미지
 

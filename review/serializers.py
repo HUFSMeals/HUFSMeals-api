@@ -72,7 +72,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Review
-        exclude = ['restaurant', 'src_lang', 'score']
+        fields = ['title', 'body', 'score']
 
 
 class ReviewInfoSerializer(serializers.ModelSerializer):
@@ -80,11 +80,6 @@ class ReviewInfoSerializer(serializers.ModelSerializer):
     리뷰 정보 시리얼라이저
     """
     image = ThumbImageSerializer(many = True)
-    def get_image(self, obj):
-        if obj.image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(obj.image.url)
-        return None
     class Meta:
         model = Review
         fields = '__all__'
