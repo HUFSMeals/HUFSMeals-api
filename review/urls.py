@@ -11,4 +11,5 @@ urlpatterns = [
     path('image/original/<int:pk>/', OriginalImageView.as_view()),
     path('image/', AllImageView.as_view()),
     path('restaurant/<int:restaurant_id>/', RestaurantReviewListView.as_view()),
+    path('user/<int:user_id>/', UserReviewListView.as_view()),
 ]
