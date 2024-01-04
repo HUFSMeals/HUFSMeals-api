@@ -41,3 +41,20 @@ class UserReviewListView(ListAPIView):
             "data" : restaurant.data
         }
         return Response(res)
+    
+
+class MyReviewListView(ListAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewInfoSerializer
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        return Review.objects.filter(user = self.request.user)
+    
+    def list(self, request, *args, **kwargs):
+        restaurant = self.get_serializer(self.get_queryset(), many = True)
+        res = {
+            "msg" : "나의 모든 리뷰 불러오기 성공",
+            "data" : restaurant.data
+        }
+        return Response(res)
