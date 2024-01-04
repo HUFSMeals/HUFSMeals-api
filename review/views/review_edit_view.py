@@ -30,3 +30,19 @@ class ReviewUpdateView(APIView):
                 "msg" : "유효하지 않은 입력"
             }
             return Response(res)
+        
+
+class ReviewDeleteView(APIView):
+    authentication_classes = [JWTAuthentication]
+    def delete(self, request, review_id):
+        review = Review.objects.get(pk = review_id)
+        if review.user != request.user:
+            res = {
+                "msg" : "리뷰 작성자와 유저 불일치"
+            }
+            return Response(res, status = status.HTTP_400_BAD_REQUEST)
+        review.delete()
+        res = {
+            "msg" : "리뷰 삭제 성공"
+        }
+        return Response(res, status = status.HTTP_204_NO_CONTENT)
