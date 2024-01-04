@@ -1,13 +1,10 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import *
 from ..models import *
-from django.db.models import Q
-import json
 from django.shortcuts import get_object_or_404
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class ReviewImageView(CreateAPIView):
@@ -29,26 +26,18 @@ class ReviewImageView(CreateAPIView):
                 "data" : ImageSetSerializer(image, context={'request': request}).data
             }
             
-            return Response(res)
+            return Response(res, status = status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors)
         
 
-class OriginalImageView(APIView):
+class OriginalImageView(RetrieveAPIView):
     """
     이미지 원본 불러오기 view
     """
-    def get(self, request, image_id):
-        image = get_object_or_404(ReviewImage, pk = image_id)
-        serializer = OriginalImageSerializer(image, context={'request': request})
-        res = {
-            "msg" : "이미지 원본 불러오기 성공",
-            "data" : {
-                "original_image" : serializer.data
-            }
-        }
-
-        return Response(res)
+    queryset = ReviewImage.objects.all()
+    serializer_class = OriginalImageSerializer
+    lookup_field = 'pk'
     
 
 class AllImageView(ListAPIView):
