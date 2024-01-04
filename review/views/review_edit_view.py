@@ -29,7 +29,7 @@ class ReviewUpdateView(APIView):
             res = {
                 "msg" : "유효하지 않은 입력"
             }
-            return Response(res)
+            return Response(res, status = status.HTTP_400_BAD_REQUEST)
         
 
 class ReviewDeleteView(APIView):

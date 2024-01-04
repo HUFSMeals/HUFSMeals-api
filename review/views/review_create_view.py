@@ -23,7 +23,6 @@ class ReviewCreateView(CreateAPIView):
         score = 5
 
         data = {
-            # 'user': user,
             'title' : request.data['title'],
             'body' : request.data['body'],
             'src_lang': src_lang,

@@ -23,7 +23,7 @@ class RestaurantReviewListView(ListAPIView):
             "msg" : "해당 식당의 모든 리뷰 불러오기 성공",
             "data" : restaurant.data
         }
-        return Response(res)
+        return Response(res, status = status.HTTP_200_OK)
     
 
 class UserReviewListView(ListAPIView):
@@ -40,7 +40,7 @@ class UserReviewListView(ListAPIView):
             "msg" : "해당 유저의 모든 리뷰 불러오기 성공",
             "data" : restaurant.data
         }
-        return Response(res)
+        return Response(res, status = status.HTTP_200_OK)
     
 
 class MyReviewListView(ListAPIView):
@@ -57,4 +57,4 @@ class MyReviewListView(ListAPIView):
             "msg" : "나의 모든 리뷰 불러오기 성공",
             "data" : restaurant.data
         }
-        return Response(res)
+        return Response(res, status = status.HTTP_200_OK)
