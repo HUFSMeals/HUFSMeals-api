@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 
-class ReviewImageSerializer(serializers.ModelSerializer):
+class OriginalImageSerializer(serializers.ModelSerializer):
     original_image = serializers.SerializerMethodField()
     """
     리뷰 사진 원본 시리얼라이저
@@ -79,7 +79,7 @@ class ReviewInfoSerializer(serializers.ModelSerializer):
     """
     리뷰 정보 시리얼라이저
     """
-    image = ReviewImageSerializer(many = True)
+    image = ThumbImageSerializer(many = True)
     def get_image(self, obj):
         if obj.image:
             request = self.context.get('request')
