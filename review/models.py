@@ -16,8 +16,8 @@ class Review(models.Model):
     """
     리뷰 model
     """
-    user = models.ForeignKey(User, null = True, on_delete = models.CASCADE)
-    restaurant = models.ForeignKey(Restaurant, null = True, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, null = True, on_delete = models.CASCADE, related_name = 'review')
+    restaurant = models.ForeignKey(Restaurant, null = True, on_delete = models.CASCADE, related_name = 'review')
     title = models.CharField(max_length = 100)
     body = models.TextField(default = "")
     src_lang = models.CharField(max_length = 10, null = True) # 작성된 리뷰의 언어

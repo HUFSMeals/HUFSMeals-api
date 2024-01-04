@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from accounts.serializers import *
 
 class OriginalImageSerializer(serializers.ModelSerializer):
     original_image = serializers.SerializerMethodField()
@@ -80,6 +81,7 @@ class ReviewInfoSerializer(serializers.ModelSerializer):
     리뷰 정보 시리얼라이저
     """
     image = ThumbImageSerializer(many = True)
+    user = UserInfoSerializer()
     class Meta:
         model = Review
         fields = '__all__'
