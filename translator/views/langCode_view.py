@@ -10,8 +10,29 @@ import json
 client_id = "cGwhwDRITcSEobTG98HL"
 secret = "mNrbhhkyEC"
 
+def langcode_dev(text):
+    """
+    개발용 언어 감지 메소드
+    """
+    code_api = "https://openapi.naver.com/v1/papago/detectLangs"
+    headers = {
+        'X-Naver-Client-Id' : client_id,
+        'X-Naver-Client-Secret' : secret
+    }
+    data = {
+        "query" : text
+    }
+    response = requests.post(code_api, headers=headers, data = data).json()
+    """
+    응답 형태
+    {
+        "langCode" : "ko"
+    }
+    """
+    return response
+
+
 class GetLangCode(APIView):
-    authentication_classes = [JWTAuthentication]
     def post(self, request):
         text = request.data['text']
         code_api = "https://openapi.naver.com/v1/papago/detectLangs"
