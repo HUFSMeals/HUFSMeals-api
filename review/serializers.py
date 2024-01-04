@@ -73,7 +73,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Review
-        fields = ['title', 'body', 'score']
+        fields = ['title', 'body', 'score', 'src_lang']
 
 
 class ReviewInfoSerializer(serializers.ModelSerializer):
@@ -102,4 +102,4 @@ class UpdateReviewSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Review
-        fields = ['title', 'body']
+        fields = ['title', 'body', 'src_lang']

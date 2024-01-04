@@ -7,6 +7,7 @@ from django.db.models import Q
 import json
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from translator.views.langCode_view import langcode_dev
 
 
 class ReviewUpdateView(APIView):
@@ -18,7 +19,10 @@ class ReviewUpdateView(APIView):
                 "msg" : "리뷰 작성자와 유저 불일치"
             }
             return Response(res, status = status.HTTP_400_BAD_REQUEST)
-        serializer = UpdateReviewSerializer(review, data = request.data)
+        src_lang = langcode_dev(request.data['body'])['langCode']
+        data = request.data.copy()
+        data['src_lang'] = src_lang
+        serializer = UpdateReviewSerializer(review, data = data)
         if serializer.is_valid():
             serializer.save()
             res = {
