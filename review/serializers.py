@@ -72,7 +72,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Review
-        exclude = ['user', 'restaurant', 'src_lang', 'score']
+        exclude = ['restaurant', 'src_lang', 'score']
 
 
 class ReviewInfoSerializer(serializers.ModelSerializer):
@@ -97,3 +97,12 @@ class TranslatedReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = TranslatedReview
         fields = '__all__'
+
+
+class UpdateReviewSerializer(serializers.ModelSerializer):
+    """
+    리뷰 수정 시리얼라이저
+    """
+    class Meta:
+        model = Review
+        fields = ['title', 'body']

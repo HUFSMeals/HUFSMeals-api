@@ -23,7 +23,7 @@ class ReviewCreateView(CreateAPIView):
         score = 5
 
         data = {
-            'user': user,
+            # 'user': user,
             'title' : request.data['title'],
             'body' : request.data['body'],
             'restaurant': restaurant,
@@ -34,7 +34,7 @@ class ReviewCreateView(CreateAPIView):
         serializer = CreateReviewSerializer(data = data)
         
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user = user)
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
