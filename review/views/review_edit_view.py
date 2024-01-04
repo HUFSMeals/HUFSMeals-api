@@ -35,9 +35,6 @@ class ReviewUpdateView(APIView):
             }
             return Response(res, status = status.HTTP_400_BAD_REQUEST)
         
-
-class ReviewDeleteView(APIView):
-    authentication_classes = [JWTAuthentication]
     def delete(self, request, review_id):
         review = Review.objects.get(pk = review_id)
         if review.user != request.user:
