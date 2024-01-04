@@ -4,5 +4,8 @@ from review.views import *
 app_name = 'review'
 
 urlpatterns = [
-
+    path('create/<int:restaurant_id>/', ReviewCreateView.as_view()),
+    path('image/upload/<int:review_id>/', ReviewImageView.as_view()),
+    path('image/original/<int:image_id>/', OriginalImageView.as_view()),
+    path('image/', AllImageView.as_view())
 ]
