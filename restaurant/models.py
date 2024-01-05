@@ -17,6 +17,7 @@ class Restaurant(models.Model):
     category = models.CharField(max_length = 50)
     phone = models.CharField(max_length = 50)
     review_cnt = models.IntegerField(default = 0)
+    score_accum = models.IntegerField(default = 0) # 누적 평점(평균 산출용)
     score_avg = models.FloatField(default = 0)
 
 
