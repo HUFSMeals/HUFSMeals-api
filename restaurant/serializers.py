@@ -35,3 +35,12 @@ class MenuInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = '__all__'
+
+
+class RestaurantSearchSerializer(serializers.ModelSerializer):
+    """
+    식당 검색 결과 시리얼라이저
+    """
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'restaurant_image', 'name', 'score_avg', 'review_cnt', 'address', 'category']
