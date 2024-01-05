@@ -8,7 +8,7 @@ from ..serializers import *
 
 class SetNickname(APIView):
     """
-    유저 닉네임 설정
+    유저 닉네임 설정 view
     """
     authentication_classes = [JWTAuthentication]
 
@@ -24,3 +24,17 @@ class SetNickname(APIView):
         }
         
         return Response(res, status = status.HTTP_200_OK)
+    
+
+class UserInfoView(APIView):
+    """
+    유저 정보 view
+    """
+    def get(self, request, user_id):
+        user = User.objects.get(pk = user_id)
+        serializer = UserInfoSerializer(user)
+        res = {
+            "msg" : "유저 정보 반환 성공",
+            "data" : serializer.data
+        }
+        return Response(res, status=status.HTTP_200_OK)

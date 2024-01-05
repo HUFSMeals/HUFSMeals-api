@@ -14,7 +14,6 @@ class Translate(APIView):
     """
     파파고 번역 api view
     """
-    authentication_classes = [JWTAuthentication]
     def post(self, request):
         text = request.data['text']
         source = request.data['source']
