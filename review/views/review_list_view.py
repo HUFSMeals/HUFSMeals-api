@@ -7,6 +7,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class RestaurantReviewListView(ListAPIView):
+    """
+    특정 식당의 리뷰 불러오기 view
+    """
     queryset = Review.objects.all()
     serializer_class = ReviewInfoSerializer
 
@@ -15,15 +18,18 @@ class RestaurantReviewListView(ListAPIView):
         return Review.objects.filter(restaurant_id = restaurant_id)
     
     def list(self, request, *args, **kwargs):
-        restaurant = self.get_serializer(self.get_queryset(), many = True)
+        review = self.get_serializer(self.get_queryset(), many = True)
         res = {
             "msg" : "해당 식당의 모든 리뷰 불러오기 성공",
-            "data" : restaurant.data
+            "data" : review.data
         }
         return Response(res, status = status.HTTP_200_OK)
     
 
 class UserReviewListView(ListAPIView):
+    """
+    특정 유저의 리뷰 불러오기 view
+    """
     queryset = Review.objects.all()
     serializer_class = ReviewInfoSerializer
 
@@ -32,15 +38,18 @@ class UserReviewListView(ListAPIView):
         return Review.objects.filter(user_id = user_id)
     
     def list(self, request, *args, **kwargs):
-        restaurant = self.get_serializer(self.get_queryset(), many = True)
+        review = self.get_serializer(self.get_queryset(), many = True)
         res = {
             "msg" : "해당 유저의 모든 리뷰 불러오기 성공",
-            "data" : restaurant.data
+            "data" : review.data
         }
         return Response(res, status = status.HTTP_200_OK)
     
 
 class MyReviewListView(ListAPIView):
+    """
+    나의 리뷰 불러오기 view
+    """
     queryset = Review.objects.all()
     serializer_class = ReviewInfoSerializer
     authentication_classes = [JWTAuthentication]
@@ -49,9 +58,9 @@ class MyReviewListView(ListAPIView):
         return Review.objects.filter(user = self.request.user)
     
     def list(self, request, *args, **kwargs):
-        restaurant = self.get_serializer(self.get_queryset(), many = True)
+        review = self.get_serializer(self.get_queryset(), many = True)
         res = {
             "msg" : "나의 모든 리뷰 불러오기 성공",
-            "data" : restaurant.data
+            "data" : review.data
         }
         return Response(res, status = status.HTTP_200_OK)
