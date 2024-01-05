@@ -4,6 +4,9 @@ from django.contrib.auth.models import BaseUserManager
 # Create your models here.
 
 class UserManager(BaseUserManager):
+    """
+    유저 생성 매니저
+    """
     def create_user(self, google_id, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
@@ -23,10 +26,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    # username = models.CharField(null=True, unique=False, max_length=20)
+    """
+    유저 모델
+    """
     google_id = models.CharField(max_length=30, unique=True, null = True)
     nickname = models.CharField(max_length=100, null = True)
-    country = models.CharField(max_length=10)
+    language = models.CharField(max_length=10)
     USERNAME_FIELD = 'google_id'
     EMAIL_FIELD = 'google_id'
     REQUIRED_FIELDS = []
