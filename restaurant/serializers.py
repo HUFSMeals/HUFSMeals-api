@@ -7,7 +7,7 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Restaurant
-        exclude = ['review_cnt', 'score_avg']
+        exclude = ['review_cnt', 'score_avg', 'score_accum']
 
 
 class RestaurantInfoSerializer(serializers.ModelSerializer):
