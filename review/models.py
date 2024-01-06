@@ -59,7 +59,6 @@ class ReviewImage(models.Model):
             if not self.review_image:
                 self.review_image.name = review_image_path(self, self.original_image.name)
 
-            # Save the review_image field
             image_thumb_io = BytesIO()
             cropped_image = image.convert('RGB')
             cropped_image.save(image_thumb_io, format='JPEG')
@@ -70,7 +69,6 @@ class ReviewImage(models.Model):
             )
             self.review_image.save(image_thumb.name, image_thumb, save=False)
 
-        # Call the superclass save method
         super().save(*args, **kwargs)
 
 
