@@ -78,6 +78,6 @@ class TranslatedReview(models.Model):
     """
     번역된 리뷰 model
     """
-    review = models.ForeignKey(Review, on_delete = models.CASCADE)
+    review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'translated_review')
     src_lang = models.CharField(max_length = 10, null = True) # 번역된 언어
     body = models.TextField(default = "")
