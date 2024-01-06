@@ -59,7 +59,6 @@ class ReviewImage(models.Model):
             if not self.review_image:
                 self.review_image.name = review_image_path(self, self.original_image.name)
 
-            # Save the review_image field
             image_thumb_io = BytesIO()
             cropped_image = image.convert('RGB')
             cropped_image.save(image_thumb_io, format='JPEG')
@@ -70,7 +69,6 @@ class ReviewImage(models.Model):
             )
             self.review_image.save(image_thumb.name, image_thumb, save=False)
 
-        # Call the superclass save method
         super().save(*args, **kwargs)
 
 
@@ -78,6 +76,6 @@ class TranslatedReview(models.Model):
     """
     번역된 리뷰 model
     """
-    review = models.ForeignKey(Review, on_delete = models.CASCADE)
+    review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'translated_review')
     src_lang = models.CharField(max_length = 10, null = True) # 번역된 언어
     body = models.TextField(default = "")

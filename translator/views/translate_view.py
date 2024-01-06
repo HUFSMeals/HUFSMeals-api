@@ -28,13 +28,15 @@ class Translate(APIView):
             }
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
         
-        translated_review = TranslatedReview.objects.filter(Q(pk = review_id)&Q(src_lang = target)).first()
-        if translated_review:
+        # 번역본이 이미 DB에 있을 경우
+        exsiting_review =  review.translated_review.filter(src_lang = target)
+        if exsiting_review.exists():
             data = {
-                "text" : translated_review.body,
+                "text" : exsiting_review.first().body,
                 "source" : source,
                 "target" : target
             }
+
             res = {
                 "msg" : "번역 성공",
                 "data" : data
@@ -75,6 +77,6 @@ class Translate(APIView):
             "msg" : "번역 성공",
             "data" : query_data
         }
-        new_review = TranslatedReview(review = review, body = query_data['text'], src_lang = target).save()
+        TranslatedReview(review = review, body = query_data['text'], src_lang = target).save()
 
         return Response(res, status=status.HTTP_200_OK)
