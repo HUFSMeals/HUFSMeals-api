@@ -1,11 +1,8 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import status
 from ..serializers import *
 from ..models import *
-from django.db.models import Q
-import json
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from translator.views.langCode_view import langcode_dev
@@ -22,7 +19,13 @@ class ReviewCreateView(CreateAPIView):
         restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
         user = request.user
         src_lang = langcode_dev(request.data['body'])
-        score = 5
+        score = request.data['score']
+
+        restaurant.review_cnt += 1
+        restaurant.score_accum += int(score)
+        restaurant.score_avg = (restaurant.score_accum/restaurant.review_cnt)
+        restaurant.save()
+        
 
         data = {
             'title' : request.data['title'],
