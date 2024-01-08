@@ -25,7 +25,7 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Restaurant
-        exclude = ['latitude', 'longtitude', 'score_accum']
+        exclude = ['latitude', 'longitude', 'score_accum']
 
 
 class CreateMenuSerializer(serializers.ModelSerializer):
