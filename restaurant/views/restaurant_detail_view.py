@@ -6,6 +6,9 @@ from ..models import *
 from django.shortcuts import get_object_or_404
 
 class RestaurantDetailView(APIView):
+    """
+    식당 세부 정보 view
+    """
     def get(self, request, restaurant_id):
         restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
         serializer = RestaurantDetailSerializer(restaurant)
