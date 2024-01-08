@@ -19,6 +19,15 @@ class RestaurantInfoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class RestaurantDetailSerializer(serializers.ModelSerializer):
+    """
+    식당 디테일 페이지 시리얼라이저
+    """
+    class Meta:
+        model = Restaurant
+        exclude = ['latitude', 'longitude', 'score_accum']
+
+
 class CreateMenuSerializer(serializers.ModelSerializer):
     """
     메뉴 생성 시리얼라이저
