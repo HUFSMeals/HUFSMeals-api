@@ -1,4 +1,5 @@
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import *
@@ -17,3 +18,11 @@ class RestaurantDetailView(APIView):
             "data" : serializer.data
         }
         return Response(res, status = status.HTTP_200_OK)
+    
+
+class RestaurantListView(ListAPIView):
+    """
+    모든 식당 리스트 확인(개발자용)
+    """
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantInfoSerializer
