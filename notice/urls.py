@@ -5,4 +5,5 @@ app_name = 'notice'
 
 urlpatterns = [
     path('', NoticeListView.as_view()),
+    path('<int:notice_id>/', NoticeDetailView.as_view()),
 ]
