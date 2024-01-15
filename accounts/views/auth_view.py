@@ -64,6 +64,7 @@ class GoogleLogin(APIView):
         # new_user = User(username = username, google_id = google_id, language = language)
         new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
+        access_token = str(token.access_token)
         res = {
             "msg" : "새로운 사용자 로그인 성공",
             "code" : "a-S002",
