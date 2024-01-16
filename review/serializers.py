@@ -94,12 +94,3 @@ class TranslatedReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = TranslatedReview
         fields = '__all__'
-
-
-class UpdateReviewSerializer(serializers.ModelSerializer):
-    """
-    리뷰 수정 시리얼라이저
-    """
-    class Meta:
-        model = Review
-        fields = ['title', 'body', 'src_lang']
