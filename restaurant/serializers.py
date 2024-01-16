@@ -53,3 +53,12 @@ class RestaurantSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'restaurant_image', 'name', 'score_avg', 'review_cnt', 'address', 'category']
+
+    
+class RestaurantLocationSerializer(serializers.ModelSerializer):
+    """
+    식당 위/경도 시리얼라이저
+    """
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'latitude', 'longitude', 'category']
