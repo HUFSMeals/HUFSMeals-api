@@ -16,10 +16,10 @@ class ReviewUpdateView(APIView):
                 "msg" : "리뷰 작성자와 유저 불일치"
             }
             return Response(res, status = status.HTTP_400_BAD_REQUEST)
-        src_lang = langcode_dev(request.data['body'])['langCode']
+        src_lang = langcode_dev(request.data['body'])
         data = request.data.copy()
         data['src_lang'] = src_lang
-        serializer = UpdateReviewSerializer(review, data = data)
+        serializer = CreateReviewSerializer(review, data = data)
         if serializer.is_valid():
             serializer.save()
             res = {
