@@ -37,7 +37,7 @@ class ReviewCreateView(CreateAPIView):
         serializer = CreateReviewSerializer(data = data)
         
         if serializer.is_valid():
-            isinstance = serializer.save(user = user, restaurant = restaurant, src_lang = src_lang)
+            isinstance = serializer.save(user = user, restaurant = restaurant)
             review = Review.objects.get(pk = isinstance.pk)
             res = {
                 "msg" : "리뷰 작성 성공",

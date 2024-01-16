@@ -19,13 +19,8 @@ def langcode_dev(text):
         "query" : text
     }
     response = requests.post(code_api, headers=headers, data = data).json()
-    """
-    응답 형태
-    {
-        "langCode" : "ko"
-    }
-    """
-    return response
+    src_lang = response['langCode']
+    return src_lang
 
 
 class GetLangCode(APIView):
