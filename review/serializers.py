@@ -73,7 +73,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Review
-        fields = ['title', 'body', 'score', 'src_lang']
+        fields = ['title', 'body', 'score']
 
 
 class ReviewInfoSerializer(serializers.ModelSerializer):
