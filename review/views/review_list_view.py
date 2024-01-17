@@ -4,6 +4,30 @@ from rest_framework import status
 from ..serializers import *
 from ..models import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
+import requests
+
+def translate_func(pk, target):
+    review = Review.objects.get(pk = pk)
+    exsiting_review =  review.translated_review.filter(src_lang = target)
+    if exsiting_review.exists():
+        return exsiting_review.first().body
+    translate_api = "https://openapi.naver.com/v1/papago/n2mt"
+    headers = {
+        'X-Naver-Client-Id' : "cGwhwDRITcSEobTG98HL",
+        'X-Naver-Client-Secret' : "mNrbhhkyEC"
+    }
+    data = {
+        "source" : review.src_lang,
+        "target" : target,
+        "text" : review.body
+    }
+    response = requests.post(translate_api, headers=headers, data=data).json()
+
+    if 'errorCode' in response:
+        return review.body
+    text = response['message']['result']['translatedText']
+    TranslatedReview(review = review, body = text, src_lang = target).save()
+    return text
 
 
 class RestaurantReviewListView(ListAPIView):
@@ -12,16 +36,21 @@ class RestaurantReviewListView(ListAPIView):
     """
     queryset = Review.objects.all()
     serializer_class = ReviewInfoSerializer
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         restaurant_id = self.kwargs.get('restaurant_id')
         return Review.objects.filter(restaurant_id = restaurant_id)
     
     def list(self, request, *args, **kwargs):
-        review = self.get_serializer(self.get_queryset(), many = True)
+        data = self.get_serializer(self.get_queryset(), many = True).data
+        language = request.user.language
+        for i in data:
+            if i['src_lang'] != language:
+                i['body'] = translate_func(i['id'], language)
         res = {
             "msg" : "해당 식당의 모든 리뷰 불러오기 성공",
-            "data" : review.data
+            "data" : data
         }
         return Response(res, status = status.HTTP_200_OK)
     
@@ -32,16 +61,21 @@ class UserReviewListView(ListAPIView):
     """
     queryset = Review.objects.all()
     serializer_class = ReviewInfoSerializer
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         user_id = self.kwargs.get('user_id')
         return Review.objects.filter(user_id = user_id)
     
     def list(self, request, *args, **kwargs):
-        review = self.get_serializer(self.get_queryset(), many = True)
+        data = self.get_serializer(self.get_queryset(), many = True).data
+        language = request.user.language
+        for i in data:
+            if i['src_lang'] != language:
+                i['body'] = translate_func(i['id'], language)
         res = {
             "msg" : "해당 유저의 모든 리뷰 불러오기 성공",
-            "data" : review.data
+            "data" : data
         }
         return Response(res, status = status.HTTP_200_OK)
     
