@@ -16,7 +16,7 @@ class ReviewImageView(CreateAPIView):
     def create(self, request, review_id):
         review = get_object_or_404(Review, pk = review_id)
 
-        serializer = ReviewImageSerializer(data = request.data)
+        serializer = ImageUploadSerializer(data = request.data)
         if serializer.is_valid():
             instance = serializer.save(review = review)
             image = ReviewImage.objects.get(pk = instance.pk)
