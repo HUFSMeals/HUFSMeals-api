@@ -28,9 +28,7 @@ class CreateMenuView(CreateAPIView):
             menu = serializer.save(restaurant = restaurant)
             res = {
                 "msg" : "메뉴 등록 완료",
-                "data" : {
-                    MenuInfoSerializer(menu).data
-                }
+                "data" : MenuInfoSerializer(menu).data
             }
             return Response(res, status = status.HTTP_200_OK)
         else:
