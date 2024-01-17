@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from review.serializers import *
 
 class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
@@ -92,3 +93,23 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'latitude', 'longitude', 'category']
+
+
+class RestaurantDetailSerializer2(serializers.ModelSerializer):
+    review = ReviewInfoSerializer(many = True)
+    menu = MenuInfoSerializer(many = True)
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'name', 'restaurant_image', 'opening_hours', 'address', 'category', 'phone', 'review_cnt', 'score_avg', 'review', 'menu']
+    
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+    
+    def get_score_avg(self, obj):
+        if obj.score_avg:
+            request = self.context.get('request')
+            return float(request)
+        return None
