@@ -34,7 +34,7 @@ class CreateMenuSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Menu
-        fields = ['name', 'image']
+        fields = ['name', 'menu_image']
 
 
 class MenuInfoSerializer(serializers.ModelSerializer):
