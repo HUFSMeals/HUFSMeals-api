@@ -18,7 +18,7 @@ class GoogleLoginApi(APIView):
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
         
-        redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        redirect_uri = "https://hufsmeals/accounts/login/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
@@ -40,7 +40,7 @@ class DevGoogleLogin(APIView):
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+            "redirect_uri" : "https://hufsmeals/accounts/login/"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
