@@ -15,7 +15,8 @@ class SearchRestaurantView(ListAPIView):
         return Restaurant.objects.filter(name__contains = restaurant_name)
     
     def list(self, request, *args, **kwargs):
-        restaurant = self.get_serializer(self.get_queryset(), context={'request': request}, many = True)
+        # restaurant = self.get_serializer(self.get_queryset(), context={'request': request}, many = True)
+        restaurant = RestaurantSearchSerializer(self.get_queryset(), context={'request': request}, many = True)
         res = {
             "msg" : "식당 이름으로 검색 성공",
             "data" : restaurant.data

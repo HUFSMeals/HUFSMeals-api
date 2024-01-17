@@ -31,6 +31,11 @@ class RestaurantInfoSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(obj.restaurant_image.url)
         return None
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
+
 
 class RestaurantDetailSerializer(serializers.ModelSerializer):
     """
@@ -45,6 +50,11 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             return request.build_absolute_uri(obj.restaurant_image.url)
         return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
 
 
 class CreateMenuSerializer(serializers.ModelSerializer):
@@ -84,6 +94,11 @@ class RestaurantSearchSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             return request.build_absolute_uri(obj.restaurant_image.url)
         return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
 
     
 class RestaurantLocationSerializer(serializers.ModelSerializer):
@@ -113,3 +128,8 @@ class RestaurantDetailSerializer2(serializers.ModelSerializer):
             request = self.context.get('request')
             return float(request)
         return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
