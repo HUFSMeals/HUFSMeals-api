@@ -11,4 +11,7 @@ urlpatterns = [
     # 개발자용
     path('google/', GoogleLoginApi.as_view()),
     path('login/', DevGoogleLogin.as_view()),
+
+    path('test/google/', GoogleLoginView.as_view()),
+    path('test/login/', GoogleCallbackView.as_view()),
 ]
