@@ -27,13 +27,3 @@ class RestaurantListView(ListAPIView):
     """
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantInfoSerializer
-
-
-class MenuListView(APIView):
-    """
-    식당 메뉴 view
-    """
-    def get(self, request, restaurant_id):
-        menus = Menu.objects.filter(restaurant = restaurant_id)
-        serializer = MenuInfoSerializer(menus, many = True)
-        return Response(serializer.data)
