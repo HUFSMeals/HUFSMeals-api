@@ -77,6 +77,12 @@ class ReviewImageSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             return request.build_absolute_uri(obj.review_image.url)
         return None
+    
+
+class ImageUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReviewImage
+        fields = ['review_image']
 
 
 class CreateReviewSerializer(serializers.ModelSerializer):

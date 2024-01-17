@@ -72,7 +72,7 @@ class ImageUpdateView(APIView):
                 "msg" : "리뷰 작성자와 유저 불일치"
             }
             return Response(res, status = status.HTTP_400_BAD_REQUEST)
-        serializer = ReviewImageSerializer(image, request.data)
+        serializer = ImageUploadSerializer(image, request.data)
         if serializer.is_valid():
             serializer.save()
             res = {
