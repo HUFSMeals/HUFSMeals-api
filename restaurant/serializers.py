@@ -9,6 +9,12 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         exclude = ['review_cnt', 'score_avg', 'score_accum']
 
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+
 
 class RestaurantInfoSerializer(serializers.ModelSerializer):
     """
@@ -18,6 +24,12 @@ class RestaurantInfoSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = '__all__'
 
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+
 
 class RestaurantDetailSerializer(serializers.ModelSerializer):
     """
@@ -26,6 +38,12 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         exclude = ['latitude', 'longitude', 'score_accum']
+
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
 
 
 class CreateMenuSerializer(serializers.ModelSerializer):
@@ -45,6 +63,12 @@ class MenuInfoSerializer(serializers.ModelSerializer):
         model = Menu
         fields = '__all__'
 
+    def get_menu_image(self, obj):
+        if obj.menu_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.menu_image.url)
+        return None
+
 
 class RestaurantSearchSerializer(serializers.ModelSerializer):
     """
@@ -53,6 +77,12 @@ class RestaurantSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'restaurant_image', 'name', 'score_avg', 'review_cnt', 'address', 'category']
+
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
 
     
 class RestaurantLocationSerializer(serializers.ModelSerializer):

@@ -13,7 +13,7 @@ class MenuListView(APIView):
     """
     def get(self, request, restaurant_id):
         menus = Menu.objects.filter(restaurant = restaurant_id)
-        serializer = MenuInfoSerializer(menus, many = True)
+        serializer = MenuInfoSerializer(menus, context={'request': request}, many = True)
         return Response(serializer.data)
     
 
@@ -28,7 +28,7 @@ class CreateMenuView(CreateAPIView):
             menu = serializer.save(restaurant = restaurant)
             res = {
                 "msg" : "메뉴 등록 완료",
-                "data" : MenuInfoSerializer(menu).data
+                "data" : MenuInfoSerializer(menu, context={'request': request}).data
             }
             return Response(res, status = status.HTTP_200_OK)
         else:
