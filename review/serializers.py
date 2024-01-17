@@ -69,7 +69,7 @@ from accounts.serializers import *
 
 class ReviewImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
+        model = ReviewImage
         fields = '__all__'
 
     def get_review_image(self, obj):
