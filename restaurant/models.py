@@ -27,6 +27,6 @@ def menu_images_path(instance, filename):
     return f'menu_images/{instance.restaurant.name}_{instance.restaurant.pk}/{filename}'
 
 class Menu(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'menu')
     name = models.CharField(max_length = 50)
     menu_image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)

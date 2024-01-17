@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from review.serializers import *
 
 class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
@@ -8,6 +9,12 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         exclude = ['review_cnt', 'score_avg', 'score_accum']
+
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
 
 
 class RestaurantInfoSerializer(serializers.ModelSerializer):
@@ -18,6 +25,17 @@ class RestaurantInfoSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = '__all__'
 
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
+
 
 class RestaurantDetailSerializer(serializers.ModelSerializer):
     """
@@ -27,6 +45,17 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
         model = Restaurant
         exclude = ['latitude', 'longitude', 'score_accum']
 
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
+
 
 class CreateMenuSerializer(serializers.ModelSerializer):
     """
@@ -34,7 +63,7 @@ class CreateMenuSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Menu
-        fields = ['name', 'image']
+        fields = ['name', 'menu_image']
 
 
 class MenuInfoSerializer(serializers.ModelSerializer):
@@ -45,6 +74,12 @@ class MenuInfoSerializer(serializers.ModelSerializer):
         model = Menu
         fields = '__all__'
 
+    def get_menu_image(self, obj):
+        if obj.menu_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.menu_image.url)
+        return None
+
 
 class RestaurantSearchSerializer(serializers.ModelSerializer):
     """
@@ -54,6 +89,17 @@ class RestaurantSearchSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ['id', 'restaurant_image', 'name', 'score_avg', 'review_cnt', 'address', 'category']
 
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
+
     
 class RestaurantLocationSerializer(serializers.ModelSerializer):
     """
@@ -62,3 +108,28 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'latitude', 'longitude', 'category']
+
+
+class RestaurantDetailSerializer2(serializers.ModelSerializer):
+    review = ReviewInfoSerializer(many = True)
+    menu = MenuInfoSerializer(many = True)
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'name', 'restaurant_image', 'opening_hours', 'address', 'category', 'phone', 'review_cnt', 'score_avg', 'review', 'menu']
+    
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+    
+    def get_score_avg(self, obj):
+        if obj.score_avg:
+            request = self.context.get('request')
+            return float(request)
+        return None
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
