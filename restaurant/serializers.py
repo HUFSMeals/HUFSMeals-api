@@ -107,7 +107,12 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Restaurant
-        fields = ['id', 'latitude', 'longitude', 'category']
+        fields = ['id', 'name', 'latitude', 'longitude', 'category', 'address', 'phone', 'review_cnt', 'score_avg']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['score_avg'] = float(representation['score_avg'])
+        return representation
 
 
 class RestaurantDetailSerializer2(serializers.ModelSerializer):
