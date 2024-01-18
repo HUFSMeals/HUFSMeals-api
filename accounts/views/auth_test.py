@@ -19,7 +19,7 @@ class GoogleRedirectView(APIView): # accounts/signin/
                 "https://www.googleapis.com/auth/userinfo.profile"
         
         # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
-        redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/code/"
+        redirect_uri = "http://localhost:5173/loginLoading"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
@@ -43,15 +43,14 @@ class GrantTokenView(APIView): # accounts/userinfo/
     클라이언트 액세스 토큰 발급 view
     """
     def get(self, request):
-        code = request.GET["code"]
-        # code = request.data.get('code')
+        code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
             "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/code/"
+            "redirect_uri" : "http://localhost:5173/loginLoading"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
