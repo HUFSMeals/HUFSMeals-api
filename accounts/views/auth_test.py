@@ -19,7 +19,7 @@ class GoogleRedirectView(APIView): # accounts/signin/
                 "https://www.googleapis.com/auth/userinfo.profile"
         
         # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
-        redirect_uri = "http://127.0.0.1:8000/accounts/code/"
+        redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/code/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
@@ -33,9 +33,9 @@ class GoogleRedirectView(APIView): # accounts/signin/
 class GetCodeView(APIView): # accounts/code/
     def get(self, request):
         code = request.GET["code"]
-        address = "http://127.0.0.1:8000/"
+        address = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/"
 
-        return redirect(f"{address}accounts/login/?code={code}")
+        return redirect(f"{address}accounts/userinfo/?code={code}")
     
 
 class GrantTokenView(APIView): # accounts/userinfo/
@@ -51,7 +51,7 @@ class GrantTokenView(APIView): # accounts/userinfo/
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "http://127.0.0.1:8000/accounts/code/"
+            "redirect_uri" : "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/code/"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
