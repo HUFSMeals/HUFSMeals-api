@@ -81,6 +81,10 @@ class GrantTokenView(APIView): # accounts/userinfo/
 
         new_user = User(google_id = google_id, language = language)
         new_user.save()
+        name = f"{new_user.pk}번째 부"
+        new_user.nickname = name
+        new_user.save()
+
         token = TokenObtainPairSerializer.get_token(new_user)
         access_token = str(token.access_token)
         res = {

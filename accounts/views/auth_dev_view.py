@@ -75,6 +75,9 @@ class DevGoogleLogin(APIView):
 
         new_user = User(google_id = google_id, language = language)
         new_user.save()
+        # name = f"{new_user.pk}번째 부"
+        # new_user.nickname = name
+        # new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
         access_token = str(token.access_token)
         res = {
@@ -82,7 +85,8 @@ class DevGoogleLogin(APIView):
             "code" : "a-S002",
             "data" : {
                 "access_token" : access_token,
-                "exist_user" : False
+                "exist_user" : False,
+                "pk" : new_user.pk
             }
         }
         return Response(res, status=status.HTTP_200_OK)
