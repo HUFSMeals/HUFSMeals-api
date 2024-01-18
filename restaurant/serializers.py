@@ -115,7 +115,7 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
         return representation
 
 
-class RestaurantDetailSerializer2(serializers.ModelSerializer):
+class RestaurantPageSerializer(serializers.ModelSerializer):
     review = ReviewInfoSerializer(many = True)
     menu = MenuInfoSerializer(many = True)
     class Meta:
@@ -127,13 +127,7 @@ class RestaurantDetailSerializer2(serializers.ModelSerializer):
             request = self.context.get('request')
             return request.build_absolute_uri(obj.restaurant_image.url)
         return None
-    
-    def get_score_avg(self, obj):
-        if obj.score_avg:
-            request = self.context.get('request')
-            return float(request)
-        return None
-    
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])

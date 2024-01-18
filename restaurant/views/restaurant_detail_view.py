@@ -61,7 +61,7 @@ class RestaurantDetailView2(APIView):
     def get(self, request, restaurant_id):
         language = request.user.language
         restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
-        serializer = RestaurantDetailSerializer2(restaurant, context={'request': request})
+        serializer = RestaurantPageSerializer(restaurant, context={'request': request})
     
         data = serializer.data
         for i in data['review']:
