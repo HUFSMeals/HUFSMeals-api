@@ -56,7 +56,7 @@ class RestaurantListView(ListAPIView):
     serializer_class = RestaurantInfoSerializer
 
 
-class RestaurantDetailView2(APIView):
+class RestaurantPageView(APIView):
     authentication_classes = [JWTAuthentication]
     def get(self, request, restaurant_id):
         language = request.user.language
