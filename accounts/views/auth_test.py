@@ -17,17 +17,16 @@ class GoogleRedirectView(APIView): # accounts/signin/
         app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
-        
-        # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
         redirect_uri = "http://localhost:5173/loginLoading"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
-        response = redirect(
-            f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
-        )
+        response = f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
+
+        # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        
         
         # 구글로 리다이렉트 되고 구글은 다시 accounts/code/로 리다이렉트 시킨다.
-        return response
+        return Response({"address" : response})
 
 
 class GetCodeView(APIView): # accounts/code/
