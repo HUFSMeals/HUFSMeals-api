@@ -42,7 +42,7 @@ class GrantTokenView(APIView): # accounts/userinfo/
     """
     클라이언트 액세스 토큰 발급 view
     """
-    def get(self, request):
+    def post(self, request):
         code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
