@@ -1,4 +1,4 @@
-from rest_framework.views import APIView
+from rest_framework.views import APIView, View
 import requests
 from django.shortcuts import redirect
 from rest_framework.response import Response
@@ -9,41 +9,47 @@ from ..serializers import *
 
 lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr']
 
-class GoogleLoginApi(APIView):
+class GoogleRedirectView(APIView): # accounts/signin/
     """
-    개발자용 구글 로그인 페이지 접속 view
+    구글 로그인 페이지 접속 view
     """
     def get(self, request):
         app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
-        
-        # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
-        redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        redirect_uri = "http://localhost:5173/loginLoading"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
-        response = redirect(
-            f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
-        )
+        response = f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
+
+        # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        
         
         # 구글로 리다이렉트 되고 구글은 다시 accounts/code/로 리다이렉트 시킨다.
-        return response
+        return Response({"address" : response})
 
 
-class DevGoogleLogin(APIView):
-    """
-    개발자용 액세스 토큰 발급 view
-    """
+class GetCodeView(APIView): # accounts/code/
     def get(self, request):
         code = request.GET["code"]
-        # code = request.data.get('code')
+        address = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/"
+
+        return redirect(f"{address}accounts/userinfo/?code={code}")
+    
+
+class GrantTokenView(APIView): # accounts/userinfo/
+    """
+    클라이언트 액세스 토큰 발급 view
+    """
+    def post(self, request):
+        code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
             "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "https://hufsmeals/accounts/login/"
+            "redirect_uri" : "http://localhost:5173/loginLoading"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
