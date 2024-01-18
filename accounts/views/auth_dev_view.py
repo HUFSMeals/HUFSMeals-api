@@ -18,13 +18,15 @@ class GoogleLoginApi(APIView):
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
         
-        redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+        redirect_uri = "http://127.0.0.1:8000/accounts/code/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
             f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
         )
         
+        # 구글로 리다이렉트 되고 구글은 다시 accounts/code/로 리다이렉트 시킨다.
         return response
 
 
@@ -34,13 +36,14 @@ class DevGoogleLogin(APIView):
     """
     def get(self, request):
         code = request.GET["code"]
+        # code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
             "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
+            "redirect_uri" : "http://127.0.0.1:8000/accounts/code/"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
