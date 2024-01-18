@@ -8,6 +8,9 @@ from translator.views.langCode_view import langcode_dev
 
 
 class ReviewUpdateView(APIView):
+    """
+    리뷰 수정/삭제 view
+    """
     authentication_classes = [JWTAuthentication]
     def put(self, request, review_id):
         review = Review.objects.get(pk = review_id)
@@ -47,6 +50,9 @@ class ReviewUpdateView(APIView):
     
 
 class ImageUpdateView(APIView):
+    """
+    리뷰 이미지 업로드 view
+    """
     authentication_classes = [JWTAuthentication]
     def get_image(self):
         image = ReviewImage.objects.get(pk = self.kwargs.get('image_id'))

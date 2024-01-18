@@ -7,6 +7,7 @@ from ..models import *
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
 import requests
+from decouple import config
 
 def translate_func(pk, target):
     review = Review.objects.get(pk = pk)
@@ -15,8 +16,8 @@ def translate_func(pk, target):
         return exsiting_review.first().body
     translate_api = "https://openapi.naver.com/v1/papago/n2mt"
     headers = {
-        'X-Naver-Client-Id' : "cGwhwDRITcSEobTG98HL",
-        'X-Naver-Client-Secret' : "mNrbhhkyEC"
+        'X-Naver-Client-Id' : config("client_id"),
+        'X-Naver-Client-Secret' : config('secret')
     }
     data = {
         "source" : review.src_lang,
@@ -32,31 +33,10 @@ def translate_func(pk, target):
     return text
 
 
-class RestaurantDetailView(APIView):
+class RestaurantPageView(APIView):
     """
     식당 세부 정보 view
     """
-    def get(self, request, restaurant_id):
-        restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
-        data = RestaurantDetailSerializer(restaurant, context={'request': request}).data
-        # data['score_avg'] = float(data['score_avg'])
-        # res = {
-        #     "msg" : "식당 세부 정보 반환 성공",
-        #     "data" : serializer.data
-        # }
-        res = data
-        return Response(res, status = status.HTTP_200_OK)
-    
-
-class RestaurantListView(ListAPIView):
-    """
-    모든 식당 리스트 확인(개발자용)
-    """
-    queryset = Restaurant.objects.all()
-    serializer_class = RestaurantInfoSerializer
-
-
-class RestaurantPageView(APIView):
     authentication_classes = [JWTAuthentication]
     def get(self, request, restaurant_id):
         language = request.user.language
@@ -73,3 +53,29 @@ class RestaurantPageView(APIView):
             "data" : data
         }
         return Response(res, status = status.HTTP_200_OK)
+
+
+class RestaurantListView(ListAPIView):
+    """
+    모든 식당 리스트 확인(개발용 api)
+    """
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantInfoSerializer
+
+
+class RestaurantDetailView(APIView):
+    """
+    식당 세부 정보 view
+    """
+    def get(self, request, restaurant_id):
+        restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
+        data = RestaurantDetailSerializer(restaurant, context={'request': request}).data
+        # data['score_avg'] = float(data['score_avg'])
+        # res = {
+        #     "msg" : "식당 세부 정보 반환 성공",
+        #     "data" : serializer.data
+        # }
+        res = data
+        return Response(res, status = status.HTTP_200_OK)
+
+
