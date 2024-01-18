@@ -12,4 +12,5 @@ urlpatterns = [
     path('menu/<int:restaurant_id>/', MenuListView.as_view()),
     path('menu/create/<int:restaurant_id>/', CreateMenuView.as_view()),
     path('detail/integ/<int:restaurant_id>/', RestaurantDetailView2.as_view()),
+    path('update/<int:pk>/', RestaurantUpdateView.as_view()),
 ]

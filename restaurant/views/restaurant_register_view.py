@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import *
@@ -12,3 +12,16 @@ class RestaurantRegisterView(CreateAPIView):
     """
     serializer_class = CreateRestaurantSerializer
     queryset = Restaurant.objects.all()
+
+
+class RestaurantUpdateView(UpdateAPIView):
+    """
+    식당 정보 수정 view
+    """
+    serializer_class = CreateRestaurantSerializer
+    queryset = Restaurant.objects.all()
+    
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
