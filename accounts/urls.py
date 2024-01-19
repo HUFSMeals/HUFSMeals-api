@@ -14,7 +14,6 @@ urlpatterns = [
 
     # 클라이언트 로그인 테스트
     path('signin/', GoogleRedirectView.as_view()),
-    path('code/', GetCodeView.as_view()),
     path('userinfo/', GrantTokenView.as_view()),
 ]
 
