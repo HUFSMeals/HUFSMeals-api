@@ -112,13 +112,13 @@ WSGI_APPLICATION = 'HUFSMeals_api.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+    'default' : {
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hufsmeals',
         'USER': 'root',
-        'PASSWORD': 'wjdtjq98',
-        'HOST': 'svc.sel5.cloudtype.app',
-        'PORT': '31817'
+        'PASSWORD': config('db_password'),
+        'HOST': '158.179.171.230',
+        'PORT': '3305',
     }
 }
 
