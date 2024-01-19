@@ -6,9 +6,32 @@ from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from review.models import *
 from django.db.models import Q
+from decouple import config
 
-client_id = "cGwhwDRITcSEobTG98HL"
-secret = "mNrbhhkyEC"
+
+def translate_func(pk, target):
+    review = Review.objects.get(pk = pk)
+    exsiting_review =  review.translated_review.filter(src_lang = target)
+    if exsiting_review.exists():
+        return exsiting_review.first().body
+    translate_api = "https://openapi.naver.com/v1/papago/n2mt"
+    headers = {
+        'X-Naver-Client-Id' : config('client_id'),
+        'X-Naver-Client-Secret' : config('secret')
+    }
+    data = {
+        "source" : review.src_lang,
+        "target" : target,
+        "text" : review.body
+    }
+    response = requests.post(translate_api, headers=headers, data=data).json()
+
+    if 'errorCode' in response:
+        return review.body
+    text = response['message']['result']['translatedText']
+    TranslatedReview(review = review, body = text, src_lang = target).save()
+    return text
+
 
 class Translate(APIView):
     """
@@ -45,8 +68,8 @@ class Translate(APIView):
 
         translate_api = "https://openapi.naver.com/v1/papago/n2mt"
         headers = {
-            'X-Naver-Client-Id' : client_id,
-            'X-Naver-Client-Secret' : secret
+            'X-Naver-Client-Id' : config('client_id'),
+            'X-Naver-Client-Secret' : config('secret')
         }
         data = {
             "source" : source,

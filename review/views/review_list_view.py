@@ -5,6 +5,7 @@ from ..serializers import *
 from ..models import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 import requests
+from decouple import config
 
 def translate_func(pk, target):
     review = Review.objects.get(pk = pk)
@@ -13,8 +14,8 @@ def translate_func(pk, target):
         return exsiting_review.first().body
     translate_api = "https://openapi.naver.com/v1/papago/n2mt"
     headers = {
-        'X-Naver-Client-Id' : "cGwhwDRITcSEobTG98HL",
-        'X-Naver-Client-Secret' : "mNrbhhkyEC"
+        'X-Naver-Client-Id' : config('client_id'),
+        'X-Naver-Client-Secret' : config('secret')
     }
     data = {
         "source" : review.src_lang,
