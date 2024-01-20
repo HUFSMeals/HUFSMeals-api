@@ -117,7 +117,7 @@ DATABASES = {
         'NAME': 'hufsmeals',
         'USER': 'root',
         'PASSWORD': config('db_password'),
-        'HOST': '172.17.0.2',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
