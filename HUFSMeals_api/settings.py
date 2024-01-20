@@ -117,7 +117,7 @@ DATABASES = {
         'NAME': 'hufsmeals',
         'USER': 'root',
         'PASSWORD': config('db_password'),
-        'HOST': '158.179.171.230',
+        'HOST': 'recursing_carson',
         'PORT': '3305',
     }
 }
