@@ -118,7 +118,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': config('db_password'),
         'HOST': 'recursing_carson',
-        'PORT': '3305',
+        'PORT': '3306',
     }
 }
 
