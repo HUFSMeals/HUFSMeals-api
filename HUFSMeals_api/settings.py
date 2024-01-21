@@ -118,7 +118,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': config('db_password'),
         'HOST': 'mysql_db',
-        'PORT': '3305',
+        'PORT': '3306',
     }
 }
 
