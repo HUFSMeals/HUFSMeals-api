@@ -2,7 +2,10 @@ services:
   web:
     image: hufsmeals/server
     container_name: web
-    command: ["gunicorn", "HUFSMeals_api.wsgi:application", "-b", "0.0.0.0:8000"]
+    command:
+      - "python manage.py makemigrations"
+      - "python manage.py migrate"
+      - "gunicorn HUFSMeals_api.wsgi:application -b 0.0.0.0:8000"
     ports:
       - "8000:8000"
     volumes:
