@@ -115,10 +115,10 @@ DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hufsmeals',
-        'USER': 'root',
+        'USER': 'worker',
         'PASSWORD': config('db_password'),
-        'HOST': '172.17.0.2',
-        'PORT': '3306',
+        'HOST': 'mysql_db',
+        'PORT': '3305',
     }
 }
 
