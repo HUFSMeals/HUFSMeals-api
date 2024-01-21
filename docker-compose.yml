@@ -1,0 +1,49 @@
+services:
+  web:
+    image: hufsmeals/server
+    container_name: web
+    command: ["gunicorn", "HUFSMeals_api.wsgi:application", "-b", "0.0.0.0:8000"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./static:/app/static
+      - ./media:/app/media
+    networks:
+      - server
+    depends_on:
+      - mysql_db
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.default.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/static
+      - ./media:/media
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    networks:
+      - server
+
+  mysql_db:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: wjdtjq98
+      MYSQL_DATABASE: hufsmeals
+      MYSQL_USER: worker
+      MYSQL_PASSWORD: wjdtjq98
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - "3305:3306"
+    networks:
+      - server
+
+networks:
+  server:
+
+volumes:
+  database:
