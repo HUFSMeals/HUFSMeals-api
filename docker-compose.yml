@@ -45,6 +45,7 @@ services:
 
 networks:
   server:
+    driver: bridge
 
 volumes:
   database:
