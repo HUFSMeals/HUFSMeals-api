@@ -1,4 +1,17 @@
-# HUFSMeals-api
+## HUFSMeals server
 
-## ERD
-![HUFSMEALS](https://github.com/HUFSMeals/HUFSMeals-api/assets/111645616/e64c7985-3ab1-4761-883d-fdebd821bcac)
+### Tech stack
+**Python**
+**Django**
+**Nginx**
+**MySQL**
+**Docker**
+**OCI(Oracle Cloud Infrastructure)**
+
+### ERD
+![HUFSMEALS](https://i.imgur.com/dWqz0ib.png)
+
+### Integrated API
+**Google Social Login(Oauth2)**
+**Naver Language Detection API**
+**Naver Papago API**
