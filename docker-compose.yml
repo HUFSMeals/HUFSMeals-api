@@ -23,6 +23,7 @@ services:
       - ./media:/media
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
     networks:
@@ -42,6 +43,12 @@ services:
       - "3305:3306"
     networks:
       - server
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:var/www/cerbot
 
 networks:
   server:
