@@ -13,5 +13,5 @@ urlpatterns = [
     path('menu/create/<int:restaurant_id>/', CreateMenuView.as_view()),
     path('detail/integ/<int:restaurant_id>/', RestaurantPageView.as_view()),
     path('update/<int:pk>/', RestaurantUpdateView.as_view()),
-    path('address/', GetCoordinateView.as_view()),
+    path('address/<str:address>/', GetCoordinateView.as_view()),
 ]
