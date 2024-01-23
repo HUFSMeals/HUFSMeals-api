@@ -8,7 +8,7 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Restaurant
-        exclude = ['review_cnt', 'score_avg', 'score_accum']
+        exclude = ['review_cnt', 'score_avg', 'score_accum', 'latitude', 'longitude']
 
     def get_retaurant_image(self, obj):
         if obj.restaurant_image:
