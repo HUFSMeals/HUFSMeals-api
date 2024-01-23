@@ -20,7 +20,7 @@ services:
     volumes:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:var/www/cerbot
+      - ./data/certbot/www:/var/www/certbot
       - ./static:/static
       - ./media:/media
     ports:
@@ -50,7 +50,7 @@ services:
     image: certbot/certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:var/www/cerbot
+      - ./data/certbot/www:/var/www/certbot
 
 networks:
   server:
