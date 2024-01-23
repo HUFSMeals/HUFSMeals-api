@@ -57,6 +57,16 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
         return representation
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    """
+    좌표를 얻기 위한 주소 시리얼라이저
+    """
+    class Meta:
+        model = Restaurant
+        fields = ['address']
+
+
+
 class CreateMenuSerializer(serializers.ModelSerializer):
     """
     메뉴 생성 시리얼라이저

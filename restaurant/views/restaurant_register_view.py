@@ -8,6 +8,7 @@ from django.db.models import Q
 import json
 from django.shortcuts import get_object_or_404
 import requests
+from decouple import config
 
 class RestaurantRegisterView(CreateAPIView):
     """
@@ -30,13 +31,14 @@ class RestaurantUpdateView(UpdateAPIView):
         return Response(serializer.data)
     
 
-class GetCoordinateView(APIView):
+class GetCoordinateView(CreateAPIView):
+    serializer_class = AddressSerializer
     def post(self, request):
         address = request.data.get('address')
         api_address = "https://dapi.kakao.com/v2/local/search/address.json"
 
         headers = {
-            "Authorization" : "KakaoAK 0c40ab9c07acc3f208217177f95f72c7"
+            "Authorization" : f"KakaoAK {config('kakao_app_key')}"
         }
         data = {
             "query" : address,
