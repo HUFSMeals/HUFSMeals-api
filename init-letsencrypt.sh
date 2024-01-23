@@ -9,7 +9,7 @@ domains=(hufsmeals.shop www.hufsmeals.shop)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="wjdtjq26@naver.com"
-staging=0
+staging=1
 
 if [ -d "$data_path" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
