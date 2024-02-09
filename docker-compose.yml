@@ -2,13 +2,15 @@ services:
   web:
     image: hufsmeals/server
     container_name: web
-    command: ['gunicorn', 'HUFSMeals_api.wsgi:application', '-b', '0.0.0.0:8000']
+    command: bash -c "
+      while ! nc -z mysql_db 3306; do sleep 1; done && python manage.py makemigrations && python manage.py migrate && gunicorn MoC.wsgi:application -b 0.0.0.0:8000"
     ports:
       - "8000:8000"
     volumes:
       - .:/app
       - ./static:/app/static
       - ./media:/app/media
+    restart: always
     networks:
       - server
     depends_on:
@@ -29,6 +31,7 @@ services:
       - "443:443"
     depends_on:
       - web
+    restart: always
     networks:
       - server
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -43,6 +46,7 @@ services:
       MYSQL_PASSWORD: 'wjdtjq98'
     volumes:
       - database:/var/lib/mysql
+    restart: always
     ports:
       - "3305:3306"
     networks:
