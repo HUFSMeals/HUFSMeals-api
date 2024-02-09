@@ -9,6 +9,7 @@ services:
       - .:/app
       - ./static:/app/static
       - ./media:/app/media
+    restart: always
     networks:
       - server
     depends_on:
@@ -28,6 +29,7 @@ services:
       - "443:443"
     depends_on:
       - web
+    restart: always
     networks:
       - server
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -42,6 +44,7 @@ services:
       MYSQL_PASSWORD: 'wjdtjq98'
     volumes:
       - database:/var/lib/mysql
+    restart: always
     ports:
       - "3305:3306"
     networks:
