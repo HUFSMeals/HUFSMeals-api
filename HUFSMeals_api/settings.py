@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
 
     #dj-rest-auth
     'dj_rest_auth',
@@ -112,13 +113,13 @@ WSGI_APPLICATION = 'HUFSMeals_api.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+    'default' : {
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hufsmeals',
         'USER': 'root',
-        'PASSWORD': 'wjdtjq98',
-        'HOST': 'svc.sel5.cloudtype.app',
-        'PORT': '31817'
+        'PASSWORD': config('db_password'),
+        'HOST': 'mysql_db',
+        'PORT': '3306',
     }
 }
 
@@ -266,3 +267,9 @@ APPEND_SLASH = False
 CORS_ORIGIN_WHITELIST = [
 "http://localhost:3000",
 "http://127.0.0.1:8000"]
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

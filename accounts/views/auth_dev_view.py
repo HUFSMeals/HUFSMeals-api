@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from ..models import *
 from ..serializers import *
+from decouple import config
 
 lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr']
 
@@ -14,12 +15,12 @@ class GoogleLoginApi(APIView):
     개발자용 구글 로그인 페이지 접속 view
     """
     def get(self, request):
-        app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
+        app_key = config('google_app_key')
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
         
         # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
-        redirect_uri = "https://hufsmeals.com/accounts/login/"
+        redirect_uri = "http://127.0.0.1:8000/accounts/login/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
@@ -39,11 +40,11 @@ class DevGoogleLogin(APIView):
         # code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
-            "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
-            "client_secret" : "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",
+            "client_id" : config('google_app_key'),
+            "client_secret" : config('google_secret'),
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "https://hufsmeals.com/accounts/login/"
+            "redirect_uri" : "http://127.0.0.1:8000/accounts/login/"
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
@@ -75,6 +76,9 @@ class DevGoogleLogin(APIView):
 
         new_user = User(google_id = google_id, language = language)
         new_user.save()
+        # name = f"{new_user.pk}번째 부"
+        # new_user.nickname = name
+        # new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
         access_token = str(token.access_token)
         res = {
@@ -82,7 +86,8 @@ class DevGoogleLogin(APIView):
             "code" : "a-S002",
             "data" : {
                 "access_token" : access_token,
-                "exist_user" : False
+                "exist_user" : False,
+                "pk" : new_user.pk
             }
         }
         return Response(res, status=status.HTTP_200_OK)

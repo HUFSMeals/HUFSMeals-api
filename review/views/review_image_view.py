@@ -33,7 +33,7 @@ class ReviewImageView(CreateAPIView):
 
 class OriginalImageView(RetrieveAPIView):
     """
-    이미지 원본 불러오기 view
+    단일 이미지 불러오기 view
     """
     queryset = ReviewImage.objects.all()
     serializer_class = ReviewImageSerializer

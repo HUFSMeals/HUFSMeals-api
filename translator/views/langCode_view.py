@@ -2,18 +2,17 @@ import requests
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from decouple import config
 
-client_id = "cGwhwDRITcSEobTG98HL"
-secret = "mNrbhhkyEC"
 
 def langcode_dev(text):
     """
-    개발용 언어 감지 메소드
+    언어 감지 메소드
     """
     code_api = "https://openapi.naver.com/v1/papago/detectLangs"
     headers = {
-        'X-Naver-Client-Id' : client_id,
-        'X-Naver-Client-Secret' : secret
+        'X-Naver-Client-Id' : config('client_id'),
+        'X-Naver-Client-Secret' : config('secret')
     }
     data = {
         "query" : text
@@ -28,8 +27,8 @@ class GetLangCode(APIView):
         text = request.data['text']
         code_api = "https://openapi.naver.com/v1/papago/detectLangs"
         headers = {
-            'X-Naver-Client-Id' : client_id,
-            'X-Naver-Client-Secret' : secret
+            'X-Naver-Client-Id' : config('client_id'),
+            'X-Naver-Client-Secret' : config('secret')
         }
         data = {
             "query" : text

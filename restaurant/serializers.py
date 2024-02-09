@@ -8,7 +8,7 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Restaurant
-        exclude = ['review_cnt', 'score_avg', 'score_accum']
+        exclude = ['review_cnt', 'score_avg', 'score_accum', 'latitude', 'longitude']
 
     def get_retaurant_image(self, obj):
         if obj.restaurant_image:
@@ -55,6 +55,16 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])
         return representation
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    """
+    좌표를 얻기 위한 주소 시리얼라이저
+    """
+    class Meta:
+        model = Restaurant
+        fields = ['address']
+
 
 
 class CreateMenuSerializer(serializers.ModelSerializer):
@@ -115,7 +125,7 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
         return representation
 
 
-class RestaurantDetailSerializer2(serializers.ModelSerializer):
+class RestaurantPageSerializer(serializers.ModelSerializer):
     review = ReviewInfoSerializer(many = True)
     menu = MenuInfoSerializer(many = True)
     class Meta:
@@ -127,13 +137,7 @@ class RestaurantDetailSerializer2(serializers.ModelSerializer):
             request = self.context.get('request')
             return request.build_absolute_uri(obj.restaurant_image.url)
         return None
-    
-    def get_score_avg(self, obj):
-        if obj.score_avg:
-            request = self.context.get('request')
-            return float(request)
-        return None
-    
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])

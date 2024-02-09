@@ -21,6 +21,8 @@ class CreateMenuView(CreateAPIView):
     """
     메뉴 등록 view
     """
+    queryset = Menu.objects.all()
+    serializer_class = CreateMenuSerializer
     def post(self, request, restaurant_id):
         restaurant = get_object_or_404(Restaurant, pk = restaurant_id)
         serializer = CreateMenuSerializer(data = request.data)

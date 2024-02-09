@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from ..models import *
 from ..serializers import *
+from decouple import config
 
 lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr']
 
@@ -14,7 +15,7 @@ class GoogleRedirectView(APIView): # accounts/signin/
     구글 로그인 페이지 접속 view
     """
     def get(self, request):
-        app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
+        app_key = config('google_app_key')
         scope = "https://www.googleapis.com/auth/userinfo.email " + \
                 "https://www.googleapis.com/auth/userinfo.profile"
         redirect_uri = "http://localhost:5173/loginLoading"
@@ -27,14 +28,6 @@ class GoogleRedirectView(APIView): # accounts/signin/
         
         # 구글로 리다이렉트 되고 구글은 다시 accounts/code/로 리다이렉트 시킨다.
         return Response({"address" : response})
-
-
-class GetCodeView(APIView): # accounts/code/
-    def get(self, request):
-        code = request.GET["code"]
-        address = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/"
-
-        return redirect(f"{address}accounts/userinfo/?code={code}")
     
 
 class GrantTokenView(APIView): # accounts/userinfo/
@@ -45,8 +38,8 @@ class GrantTokenView(APIView): # accounts/userinfo/
         code = request.data.get('code')
         token_url = "https://oauth2.googleapis.com/token"
         data = {
-            "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
-            "client_secret" : "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",
+            "client_id" : config('google_app_key'),
+            "client_secret" : config('google_secret'),
             "code" : code,
             "grant_type" : 'authorization_code',
             "redirect_uri" : "http://localhost:5173/loginLoading"
@@ -81,6 +74,10 @@ class GrantTokenView(APIView): # accounts/userinfo/
 
         new_user = User(google_id = google_id, language = language)
         new_user.save()
+        name = f"{new_user.pk}번째 부"
+        new_user.nickname = name
+        new_user.save()
+
         token = TokenObtainPairSerializer.get_token(new_user)
         access_token = str(token.access_token)
         res = {
