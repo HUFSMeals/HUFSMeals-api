@@ -269,6 +269,10 @@ CORS_ORIGIN_WHITELIST = [
 "http://127.0.0.1:8000",
 "https://hufsmeals.shop",]
 
+CSRF_TRUSTED_ORIGINS = [
+"https://hufsmeals.shop",
+]
+
 
 try:
     from local_settings import *
