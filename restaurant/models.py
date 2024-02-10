@@ -20,6 +20,9 @@ class Restaurant(models.Model):
     score_accum = models.IntegerField(default = 0) # 누적 평점(평균 산출용)
     score_avg = models.DecimalField(max_digits = 2, decimal_places = 1, default = 0) # 평균 평점(소수 한 자리수까지)
 
+    def __str__(self):
+        return self.name
+
 
 def menu_images_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -30,3 +33,6 @@ class Menu(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'menu')
     name = models.CharField(max_length = 50)
     menu_image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)
+
+    def __str__(self):
+        return self.name
