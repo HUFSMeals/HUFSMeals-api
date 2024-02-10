@@ -9,7 +9,7 @@ urlpatterns = [
     path('info/<int:user_id>/', UserInfoView.as_view()),
 
     # 개발자용
-    path('google/', GoogleLoginApi.as_view()),
+    path('google/', GoogleLoginApi.as_view(), name = '개발자 로그인'),
     path('login/', DevGoogleLogin.as_view()),
 
     # 클라이언트 로그인 테스트
