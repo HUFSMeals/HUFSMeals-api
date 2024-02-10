@@ -18,14 +18,14 @@ class Review(models.Model):
     """
     user = models.ForeignKey(User, null = True, on_delete = models.CASCADE, related_name = 'review')
     restaurant = models.ForeignKey(Restaurant, null = True, on_delete = models.CASCADE, related_name = 'review')
-    title = models.CharField(max_length = 100)
+    title = models.CharField(max_length = 100, default = "")
     body = models.TextField(default = "")
-    src_lang = models.CharField(max_length = 10, null = True) # 작성된 리뷰의 언어
+    src_lang = models.CharField(max_length = 10, null = True, default = "") # 작성된 리뷰의 언어
     created_at = models.DateField(auto_now_add = True, null = True)
     score = models.IntegerField(default= 0)
     
     def __str__(self):
-        return self.title
+        return f"{self.user}_{self.restaurant}_{self.title}"
     
 
 class ReviewImage(models.Model):
@@ -35,11 +35,17 @@ class ReviewImage(models.Model):
     review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'image')
     review_image = models.ImageField(upload_to = review_image_path, null = True, blank = True) # 원본 이미지
 
+    def __str__(self):
+        return f"{self.review.user}_{self.review.restaurant}_{self.pk}"
+
 
 class TranslatedReview(models.Model):
     """
     번역된 리뷰 model
     """
     review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'translated_review')
-    src_lang = models.CharField(max_length = 10, null = True) # 번역된 언어
+    src_lang = models.CharField(max_length = 10, null = True, default = "") # 번역된 언어
     body = models.TextField(default = "")
+
+    def __str__(self):
+        return f"{self.review.user}_{self.review.restaurant}_{self.src_lang}"
