@@ -46,4 +46,5 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.nickname = f"{self.pk}번째 부"
         super().save(*args, **kwargs)
     
-
+    def __str__(self):
+        return self.nickname
