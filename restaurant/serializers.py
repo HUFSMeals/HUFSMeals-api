@@ -19,7 +19,7 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
 
 class RestaurantInfoSerializer(serializers.ModelSerializer):
     """
-    식당 정보 시리얼라이저
+    식당 상세정보 시리얼라이저
     """
     class Meta:
         model = Restaurant
@@ -122,6 +122,8 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])
+        representation['longtitude'] = float(representation['latitude'])
+        representation['latitude'] = float(representation['longtitude'])
         return representation
 
 
