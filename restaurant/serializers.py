@@ -122,8 +122,8 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])
-        representation['longtitude'] = float(representation['latitude'])
-        representation['latitude'] = float(representation['longtitude'])
+        representation['latitude'] = float(representation['latitude'])
+        representation['longtitude'] = float(representation['longtitude'])
         return representation
 
 
