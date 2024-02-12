@@ -11,6 +11,9 @@ urlpatterns = [
     path('google/', GoogleLoginApi.as_view(), name = '개발자 로그인'),
     path('login/', DevGoogleLogin.as_view()),
 
+    path('server/google/', ServerGoogleLoginApi.as_view()),
+    path('server/login/', ServerDevGoogleLogin.as_view()),
+
     # 클라이언트 로그인 테스트
     path('signin/', GoogleRedirectView.as_view()),
     path('userinfo/', GrantTokenView.as_view()),
