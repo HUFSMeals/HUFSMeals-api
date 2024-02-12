@@ -13,4 +13,5 @@ urlpatterns = [
     path('restaurant/<int:restaurant_id>/', RestaurantReviewListView.as_view()),
     path('user/<int:user_id>/', UserReviewListView.as_view()),
     path('myreview/', MyReviewListView.as_view()),
+    path('restaurant/simpleinfo/<int:review_id>/', ReviewRestaurantInfoView.as_view()),
 ]

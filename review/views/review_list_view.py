@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import *
 from ..models import *
+from restaurant.serializers import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 import requests
 from decouple import config
@@ -99,3 +100,16 @@ class MyReviewListView(ListAPIView):
             "data" : review.data
         }
         return Response(res, status = status.HTTP_200_OK)
+    
+
+class ReviewRestaurantInfoView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    
+    def get(self, request, review_id):
+        review = Review.objects.get(pk = review_id)
+        restaurant_info = RestaurantSimpleSerializer(review.restaurant, context={'request': request})
+        res = {
+            "msg" : "리뷰 식당 정보 반환 성공",
+            "data" : restaurant_info.data
+        }
+        return Response(res, status=status.HTTP_200_OK)

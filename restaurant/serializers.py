@@ -144,3 +144,15 @@ class RestaurantPageSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])
         return representation
+    
+
+class RestaurantSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'name', 'restaurant_image']
+
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
