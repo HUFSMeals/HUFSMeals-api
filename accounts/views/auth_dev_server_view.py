@@ -20,7 +20,7 @@ class ServerGoogleLoginApi(APIView):
                 "https://www.googleapis.com/auth/userinfo.profile"
         
         # redirect_uri = "https://port-0-hufsmeals-1efqtf2dlrgj6rlh.sel5.cloudtype.app/accounts/login/"
-        redirect_uri = "https://hufsmeals.shop/accounts/serer/login/"
+        redirect_uri = "https://hufsmeals.shop/accounts/server/login/"
         google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
 
         response = redirect(
