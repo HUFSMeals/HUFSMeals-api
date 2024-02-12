@@ -4,7 +4,6 @@ from accounts.views import *
 app_name = 'accounts'
 
 urlpatterns = [
-    path('login/<str:code>/', GoogleLogin.as_view()),
     path('nickname/', SetNickname.as_view()),
     path('info/<int:user_id>/', UserInfoView.as_view()),
 
