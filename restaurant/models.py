@@ -23,6 +23,9 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'restaurant'
+
 
 def menu_images_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -36,3 +39,6 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        db_table = 'menu'

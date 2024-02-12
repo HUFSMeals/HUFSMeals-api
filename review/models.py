@@ -26,6 +26,9 @@ class Review(models.Model):
     
     def __str__(self):
         return f"{self.user}_{self.restaurant}_{self.title}"
+
+    class Meta:
+        db_table = 'review'
     
 
 class ReviewImage(models.Model):
@@ -38,6 +41,9 @@ class ReviewImage(models.Model):
     def __str__(self):
         return f"{self.review.user}_{self.review.restaurant}_{self.pk}"
 
+    class Meta:
+        db_table = 'review_image'
+
 
 class TranslatedReview(models.Model):
     """
@@ -49,3 +55,6 @@ class TranslatedReview(models.Model):
 
     def __str__(self):
         return f"{self.review.user}_{self.review.restaurant}_{self.src_lang}"
+
+    class Meta:
+        db_table = 'translated_review'
