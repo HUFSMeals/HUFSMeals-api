@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import *
-from review.serializers import *
+from ..models import *
+
 
 class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
@@ -66,7 +66,6 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = ['address']
 
 
-
 class CreateMenuSerializer(serializers.ModelSerializer):
     """
     메뉴 생성 시리얼라이저
@@ -125,7 +124,21 @@ class RestaurantLocationSerializer(serializers.ModelSerializer):
         representation['latitude'] = float(representation['latitude'])
         representation['longitude'] = float(representation['longitude'])
         return representation
+    
 
+class RestaurantSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'name', 'restaurant_image']
+
+    def get_retaurant_image(self, obj):
+        if obj.restaurant_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.restaurant_image.url)
+        return None
+    
+
+from review.serializers import ReviewInfoSerializer
 
 class RestaurantPageSerializer(serializers.ModelSerializer):
     review = ReviewInfoSerializer(many = True)
@@ -144,15 +157,3 @@ class RestaurantPageSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['score_avg'] = float(representation['score_avg'])
         return representation
-    
-
-class RestaurantSimpleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Restaurant
-        fields = ['id', 'name', 'restaurant_image']
-
-    def get_retaurant_image(self, obj):
-        if obj.restaurant_image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(obj.restaurant_image.url)
-        return None

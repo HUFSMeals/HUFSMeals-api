@@ -2,9 +2,6 @@ from django.db import models
 from accounts.models import User
 from restaurant.models import Restaurant
 import uuid
-from PIL import Image
-from io import BytesIO
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 def review_image_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -35,7 +32,7 @@ class ReviewImage(models.Model):
     """
     리뷰 사진 model
     """
-    review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'image')
+    review = models.ForeignKey(Review, on_delete = models.CASCADE, related_name = 'review_image')
     review_image = models.ImageField(upload_to = review_image_path, null = True, blank = True) # 원본 이미지
 
     def __str__(self):
