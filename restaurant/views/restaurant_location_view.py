@@ -40,8 +40,8 @@ class GetCoordinateView(APIView):
                 "msg" : '잘못된 주소'
             }
         else:
-            latitude = response['documents'][0]['x']
-            longtitude = response['documents'][0]['y']
+            latitude = response['documents'][0]['y']
+            longtitude = response['documents'][0]['x']
             res = {
                 '위도' : latitude,
                 '경도' : longtitude

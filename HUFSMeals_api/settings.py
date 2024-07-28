@@ -217,8 +217,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = False
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
@@ -266,7 +266,12 @@ APPEND_SLASH = False
 
 CORS_ORIGIN_WHITELIST = [
 "http://localhost:3000",
-"http://127.0.0.1:8000"]
+"http://127.0.0.1:8000",
+"https://hufsmeals.shop",]
+
+CSRF_TRUSTED_ORIGINS = [
+"https://hufsmeals.shop",
+]
 
 
 try:

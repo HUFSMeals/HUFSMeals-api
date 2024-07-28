@@ -41,7 +41,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    def save(self, *args, **kwargs):
+        if not self.nickname:  # 닉네임이 비어있을 때만 설정
+            self.nickname = f"{self.pk}번째 부"
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return self.nickname
     
-
+    class Meta:
+        db_table = 'user'

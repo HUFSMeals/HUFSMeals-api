@@ -1,9 +1,12 @@
 from rest_framework.generics import ListAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import *
 from ..models import *
+from restaurant.serializers import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 import requests
 from decouple import config
 
@@ -97,5 +100,32 @@ class MyReviewListView(ListAPIView):
         res = {
             "msg" : "나의 모든 리뷰 불러오기 성공",
             "data" : review.data
+        }
+        return Response(res, status = status.HTTP_200_OK)
+    
+
+class ReviewRestaurantInfoView(APIView):
+    authentication_classes = [JWTAuthentication]
+    
+    def get(self, request, review_id):
+        review = Review.objects.get(pk = review_id)
+        restaurant_info = RestaurantSimpleSerializer(review.restaurant, context={'request': request})
+        res = {
+            "msg" : "리뷰 식당 정보 반환 성공",
+            "data" : restaurant_info.data
+        }
+        return Response(res, status=status.HTTP_200_OK)
+    
+
+class ReviewDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, review_id):
+        review = Review.objects.get(pk = review_id)
+        serializer = ReviewInfoSerializer(review)
+        res = {
+            "msg" : "리뷰 상세정보 반환 성공",
+            "data" : serializer.data
         }
         return Response(res, status = status.HTTP_200_OK)
